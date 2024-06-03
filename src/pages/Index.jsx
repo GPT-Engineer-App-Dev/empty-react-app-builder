@@ -44,21 +44,23 @@ const Index = () => {
       {/* Main Content Area */}
       <Container maxW="container.lg" py={8}>
         <VStack spacing={4}>
-          <Text fontSize="2xl">Welcome to My Website</Text>
-          <Text>This is a simple React app with a basic structure.</Text>
-        <Box>
+          <Box>
             <Text fontSize="xl" fontWeight="bold">Dishes</Text>
-            {dishes.map((dish) => (
-              <Box key={dish.id} p={4} borderWidth={1} borderRadius="md" mb={4}>
-                <Text>Name: {dish.name}</Text>
-                <Text>Country: {dish.country}</Text>
-                <Text>Size: {dish.size}</Text>
-                <Text>Type: {dish.type}</Text>
-                <Text>Price: {dish.price}</Text>
-                <Button onClick={() => handleUpdateDish(dish.id)} colorScheme="blue" size="sm" mt={2}>Update</Button>
-                <Button onClick={() => handleDeleteDish(dish.id)} colorScheme="red" size="sm" mt={2} ml={2}>Delete</Button>
-              </Box>
-            ))}
+            {dishes.length > 0 ? (
+              dishes.map((dish) => (
+                <Box key={dish.id} p={4} borderWidth={1} borderRadius="md" mb={4}>
+                  <Text>Name: {dish.name}</Text>
+                  <Text>Country: {dish.country}</Text>
+                  <Text>Size: {dish.size}</Text>
+                  <Text>Type: {dish.type}</Text>
+                  <Text>Price: {dish.price}</Text>
+                  <Button onClick={() => handleUpdateDish(dish.id)} colorScheme="blue" size="sm" mt={2}>Update</Button>
+                  <Button onClick={() => handleDeleteDish(dish.id)} colorScheme="red" size="sm" mt={2} ml={2}>Delete</Button>
+                </Box>
+              ))
+            ) : (
+              <Text>No dishes available</Text>
+            )}
           </Box>
           <Box>
             <Text fontSize="xl" fontWeight="bold">Add New Dish</Text>
