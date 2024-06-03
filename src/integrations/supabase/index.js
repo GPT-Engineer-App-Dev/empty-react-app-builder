@@ -28,10 +28,25 @@ Dishes // table: dishes
     type: string
     price: number
 
+Orders // table: orders
+    id: number
+    created_at: string
+    dish_id: number
+    quantity: number
+    total_price: number
+
+Customers // table: customers
+    id: number
+    created_at: string
+    name: string
+    email: string
+    phone: string
+
 */
 
 // Hooks for models
 
+// Dishes
 export const useDishes = () => useQuery({
     queryKey: ['dishes'],
     queryFn: () => fromSupabase(supabase.from('dishes').select('*')),
@@ -63,6 +78,78 @@ export const useDeleteDish = () => {
         mutationFn: (id) => fromSupabase(supabase.from('dishes').delete().eq('id', id)),
         onSuccess: () => {
             queryClient.invalidateQueries('dishes');
+        },
+    });
+};
+
+// Orders
+export const useOrders = () => useQuery({
+    queryKey: ['orders'],
+    queryFn: () => fromSupabase(supabase.from('orders').select('*')),
+});
+
+export const useAddOrder = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (newOrder) => fromSupabase(supabase.from('orders').insert([newOrder])),
+        onSuccess: () => {
+            queryClient.invalidateQueries('orders');
+        },
+    });
+};
+
+export const useUpdateOrder = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (updatedOrder) => fromSupabase(supabase.from('orders').update(updatedOrder).eq('id', updatedOrder.id)),
+        onSuccess: () => {
+            queryClient.invalidateQueries('orders');
+        },
+    });
+};
+
+export const useDeleteOrder = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (id) => fromSupabase(supabase.from('orders').delete().eq('id', id)),
+        onSuccess: () => {
+            queryClient.invalidateQueries('orders');
+        },
+    });
+};
+
+// Customers
+export const useCustomers = () => useQuery({
+    queryKey: ['customers'],
+    queryFn: () => fromSupabase(supabase.from('customers').select('*')),
+});
+
+export const useAddCustomer = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (newCustomer) => fromSupabase(supabase.from('customers').insert([newCustomer])),
+        onSuccess: () => {
+            queryClient.invalidateQueries('customers');
+        },
+    });
+};
+
+export const useUpdateCustomer = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (updatedCustomer) => fromSupabase(supabase.from('customers').update(updatedCustomer).eq('id', updatedCustomer.id)),
+        onSuccess: () => {
+            queryClient.invalidateQueries('customers');
+        },
+    });
+};
+
+export const useDeleteCustomer = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (id) => fromSupabase(supabase.from('customers').delete().eq('id', id)),
+        onSuccess: () => {
+            queryClient.invalidateQueries('customers');
         },
     });
 };

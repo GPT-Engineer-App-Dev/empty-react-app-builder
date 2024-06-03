@@ -1,5 +1,5 @@
 import { Box, Container, Flex, Text, VStack, Button } from "@chakra-ui/react";
-import { useDishes, useAddDish, useUpdateDish, useDeleteDish } from "../integrations/supabase/index.js";
+import { useDishes, useAddDish, useUpdateDish, useDeleteDish } from "../integrations/supabase/hooks.js";
 import { useState } from "react";
 
 const Index = () => {
@@ -8,15 +8,15 @@ const Index = () => {
   const updateDish = useUpdateDish();
   const deleteDish = useDeleteDish();
 
-  const [newDish, setNewDish] = useState({ name: "", country: "", size: "", type: "", price: 0 });
+  const [newDish, setNewDish] = useState({ name: "", origin: "", portion: "", category: "", cost: 0 });
 
   const handleAddDish = () => {
     addDish.mutate(newDish);
-    setNewDish({ name: "", country: "", size: "", type: "", price: 0 });
+    setNewDish({ name: "", origin: "", portion: "", category: "", cost: 0 });
   };
 
   const handleUpdateDish = (dish) => {
-    updateDish.mutate({ ...dish, name: dish.name + " Updated" });
+    updateDish.mutate({ ...dish, name: dish.name + " (Updated)" });
   };
 
   const handleDeleteDish = (id) => {
@@ -52,10 +52,10 @@ const Index = () => {
             {dishes.map((dish) => (
               <Box key={dish.id} p={4} borderWidth={1} borderRadius="md" mb={4}>
                 <Text>Name: {dish.name}</Text>
-                <Text>Country: {dish.country}</Text>
-                <Text>Size: {dish.size}</Text>
-                <Text>Type: {dish.type}</Text>
-                <Text>Price: {dish.price}</Text>
+                <Text>Origin: {dish.origin}</Text>
+                <Text>Portion: {dish.portion}</Text>
+                <Text>Category: {dish.category}</Text>
+                <Text>Cost: {dish.cost}</Text>
                 <Button onClick={() => handleUpdateDish(dish)} colorScheme="blue" size="sm" mt={2}>Update</Button>
                 <Button onClick={() => handleDeleteDish(dish.id)} colorScheme="red" size="sm" mt={2} ml={2}>Delete</Button>
               </Box>
@@ -72,26 +72,26 @@ const Index = () => {
             <input
               type="text"
               placeholder="Country"
-              value={newDish.country}
-              onChange={(e) => setNewDish({ ...newDish, country: e.target.value })}
+              value={newDish.origin}
+              onChange={(e) => setNewDish({ ...newDish, origin: e.target.value })}
             />
             <input
               type="text"
               placeholder="Size"
-              value={newDish.size}
-              onChange={(e) => setNewDish({ ...newDish, size: e.target.value })}
+              value={newDish.portion}
+              onChange={(e) => setNewDish({ ...newDish, portion: e.target.value })}
             />
             <input
               type="text"
               placeholder="Type"
-              value={newDish.type}
-              onChange={(e) => setNewDish({ ...newDish, type: e.target.value })}
+              value={newDish.category}
+              onChange={(e) => setNewDish({ ...newDish, category: e.target.value })}
             />
             <input
               type="number"
               placeholder="Price"
-              value={newDish.price}
-              onChange={(e) => setNewDish({ ...newDish, price: parseInt(e.target.value) })}
+              value={newDish.cost}
+              onChange={(e) => setNewDish({ ...newDish, cost: parseInt(e.target.value) })}
             />
             <Button onClick={handleAddDish} colorScheme="green" size="sm" mt={2}>Add Dish</Button>
           </Box>
